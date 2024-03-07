@@ -1,13 +1,15 @@
 package com.project.CourseWork2.service;
 
 import com.project.CourseWork2.domain.Question;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 @SpringBootTest
 class ExaminerServiceImplTest {
     @Autowired
@@ -21,10 +23,23 @@ class ExaminerServiceImplTest {
     private final Question newQuestion5= new Question("Question5", "Answer5");
     @BeforeEach
     void innit() {
-//        questionService.add(newQuestion1);
+        questionService.addAll(new ArrayList<>(List.of(
+                newQuestion1,
+                newQuestion2,
+                newQuestion3,
+                newQuestion4,
+                newQuestion5
+        )));
+    }
+    @AfterEach
+    void destruction() {
+        questionService.removeAll();
     }
     @Test
     void getQuestions() {
-
+        Collection<Question> actual = examinerService.getQuestions(4);
+        Assertions.assertThat(actual.size()).isEqualTo(4);
+        Collection<Question> allQuestions = questionService.getAll();
+        Assertions.assertThat(allQuestions).containsAll(actual);
     }
 }

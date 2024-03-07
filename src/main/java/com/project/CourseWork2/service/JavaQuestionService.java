@@ -7,7 +7,10 @@ import java.util.*;
 
 @Service
 public class JavaQuestionService implements QuestionService {
-    private List<Question> questionList;
+    private List<Question> questionList = new ArrayList<>();
+
+    public JavaQuestionService() {
+    }
 
     public JavaQuestionService(List<Question> questionList) {
         this.questionList = questionList;
@@ -18,6 +21,16 @@ public class JavaQuestionService implements QuestionService {
         Question newQuestion = new Question(question, answer);
         questionList.add(newQuestion);
         return newQuestion;
+    }
+
+    @Override
+    public void addAll(List<Question> questions) {
+        questionList.addAll(questions);
+    }
+
+    @Override
+    public void removeAll() {
+        questionList.clear();
     }
 
     @Override
