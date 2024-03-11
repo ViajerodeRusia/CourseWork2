@@ -16,7 +16,9 @@ public class ExaminerServiceImpl implements ExaminerService {
     @Override
     public Collection<Question> getQuestions(Integer amount) {
         Set<Question> selectedQuestions = new HashSet<>();
-        while (selectedQuestions.size() < amount) {
+        int availableQuestions = questionService.getAll().size();
+        int questionsToAdd = Math.min(amount, availableQuestions);
+        while (selectedQuestions.size() < questionsToAdd) {
             selectedQuestions.add(questionService.getRandomQuestion());
         }
         return selectedQuestions;

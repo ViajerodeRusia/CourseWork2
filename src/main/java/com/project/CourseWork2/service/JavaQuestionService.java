@@ -8,6 +8,7 @@ import java.util.*;
 @Service
 public class JavaQuestionService implements QuestionService {
     private List<Question> questionList = new ArrayList<>();
+    Random random = new Random();
 
     public JavaQuestionService() {
     }
@@ -35,12 +36,8 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question remove(Question question) {
-        if (questionList.contains(question)) {
-            questionList.removeIf(q -> q.equals(question));
-            return question;
-        } else {
-            return null;
-        }
+       questionList.remove(question);
+       return question;
     }
 
     @Override
@@ -50,7 +47,6 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question getRandomQuestion() {
-        Random random = new Random();
         int randomIndex = random.nextInt(questionList.size());
         return questionList.get(randomIndex);
     }
